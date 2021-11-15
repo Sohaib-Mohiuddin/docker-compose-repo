@@ -11,6 +11,7 @@ services:
       - elastic_kibana
     ports:
       - 9200:9200
+      - 9300:9300
 
   kibana:
     image: kibana:7.14.2
