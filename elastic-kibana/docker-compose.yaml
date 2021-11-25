@@ -3,10 +3,15 @@ version: "3.0"
 services:
   elasticsearch:
     image: elasticsearch:7.14.2
-    container_name: elasticsearch
+    container_name: es-container
     environment:
+      - node.name=es01
+      - cluster.name=es
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - xpack.security.enabled=false
       - "discovery.type=single-node"
+
     networks:
       - elastickibana
     ports:
@@ -15,9 +20,9 @@ services:
 
   kibana:
     image: kibana:7.14.2
-    container_name: kibana
+    container_name: kb-container
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=http://es-container:9200
     networks:
       - elastickibana
     depends_on:
